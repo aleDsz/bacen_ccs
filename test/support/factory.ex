@@ -14,22 +14,27 @@ defmodule Bacen.CCS.Factory do
 
   def daily_update_factory do
     %Bacen.CCS.ACCS001.DailyUpdate{
-      movement_date: ~D[2021-05-07],
+      movement_date: "2021-05-07",
       quantity: 1,
-      persons: build(:persons)
+      persons: build(:accs001_persons)
     }
   end
 
-  def persons_factory do
+  def accs001_persons_factory do
+    cnpj =
+      Brcpfcnpj.cnpj_generate()
+      |> String.slice(0..7)
+
     %Bacen.CCS.ACCS001.DailyUpdate.Persons{
-      person: build_list(1, :person)
+      cnpj: cnpj,
+      person: build_list(1, :accs001_person)
     }
   end
 
-  def person_factory do
+  def accs001_person_factory do
     %Bacen.CCS.ACCS001.DailyUpdate.Persons.Person{
       cpf_cnpj: Brcpfcnpj.cpf_generate(),
-      start_date: ~D[2021-05-07],
+      start_date: "2021-05-07",
       operation_qualifier: "C",
       type: "F",
       operation_type: "I"
