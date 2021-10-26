@@ -40,4 +40,20 @@ defmodule Bacen.CCS.Factory do
       operation_type: "I"
     }
   end
+
+  def accs002_factory do
+    %Bacen.CCS.ACCS002{
+      response: build(:response)
+    }
+  end
+
+  def response_factory do
+    %Bacen.CCS.ACCS002.Response{
+      last_file_id: "000000000000",
+      status: "A",
+      error: nil,
+      reference_date: "2021-05-07 05:04:00Z",
+      movement_date: "2021-05-07"
+    }
+  end
 end
