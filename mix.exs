@@ -21,7 +21,8 @@ defmodule Bacen.CCS.MixProject do
     [
       {:ecto, "~> 3.5.8", optional: true},
       {:telemetry, "~> 0.4", optional: true},
-      {:brcpfcnpj, "~> 0.2"}
+      {:brcpfcnpj, "~> 0.2"},
+      {:ex_machina, "~> 2.7", only: :test, optional: true}
     ]
   end
 end
