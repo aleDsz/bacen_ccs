@@ -1,7 +1,9 @@
 defmodule Bacen.CCS.TestRepo do
+  @moduledoc false
 end
 
 defmodule Bacen.CCS.Factory do
+  @moduledoc false
   use ExMachina.Ecto, repo: Bacen.CCS.TestRepo
 
   def accs001_factory do
