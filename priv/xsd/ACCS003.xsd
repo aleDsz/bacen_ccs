@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<xs:schema targetNamespace="http://www.bcb.gov.br/ccs/ACCS003.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.bcb.gov.br/ccs/ACCS003.xsd" elementFormDefault="qualified" version="4.11">
+	<!-- Definicao do arquivo -->
+	<xs:element name="CCSDOC" type="CCSDOCComplexType"/>
+	<xs:complexType name="CCSDOCComplexType">
+		<xs:sequence>
+			<xs:element name="BCARQ" type="BCARQComplexType"/>
+			<xs:element name="SISARQ" type="SISARQComplexType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Definicao do BCARQ do arquivo -->
+	<xs:complexType name="BCARQComplexType">
+		<xs:sequence>
+			<xs:element name="IdentdEmissor" type="CNPJBase"/>
+			<xs:element name="IdentdDestinatario" type="CNPJBase"/>
+			<xs:element name="NomArq" type="Nome" fixed="ACCS003"/>
+			<xs:element name="NumRemessaArq" type="NumRemessaArq"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Definicao do SISARQ do arquivo -->
+	<xs:complexType name="SISARQComplexType">
+		<xs:choice>
+			<xs:element name="CCSArqValidcAtlzDiaria" type="CCSArqValidcAtlzDiariaComplexType"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="CCSArqValidcAtlzDiariaComplexType">
+		<xs:sequence>
+			<xs:element name="Repet_ACCS003_Pessoa" type="Repet_ACCS003_PessoaComplexType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="QtdErro" type="Qtd"/>
+			<xs:element name="QtdOpCCSActo" type="Qtd"/>
+			<xs:element name="DtHrBC" type="xs:dateTime"/>
+			<xs:element name="DtMovto" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Repet_ACCS003_PessoaComplexType">
+		<xs:sequence>
+			<xs:element name="CNPJBasePart" type="CNPJBase" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Grupo_ACCS003_Pessoa" type="Grupo_ACCS003_PessoaComplexType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Grupo_ACCS003_PessoaComplexType">
+		<xs:sequence>
+			<xs:element name="TpOpCCS" type="TpOpCCS"/>
+			<xs:element name="QualifdrOpCCS" type="QualifdrOpCCS"/>
+			<xs:element name="TpPessoa" type="TpPessoa"/>
+			<xs:element name="CNPJ_CPFPessoa" type="CNPJ_CPF"/>
+			<xs:element name="DtIni" type="xs:date"/>
+			<xs:element name="DtFim" type="xs:date" minOccurs="0"/>
+			<xs:element name="ErroCCS" type="CodErro" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Definicao do tipos simples do arquivo -->
+	<xs:simpleType name="CNPJBase">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="8"/>
+			<xs:pattern value="[0-9]{8}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NumRemessaArq">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="12"/>
+			<xs:pattern value="[0-9]{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Nome">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="80"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CNPJ_CPF">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="14"/>
+			<xs:pattern value="[0-9]{11}|[0-9]{14}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodErro">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="8"/>
+			<xs:pattern value="E[A-Z]{3}[0-9]{4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Qtd">
+		<xs:restriction base="xs:integer">
+			<xs:totalDigits value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="QualifdrOpCCS">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1"/>
+			<xs:pattern value="C|L|N|P|E|H"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TpOpCCS">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1"/>
+			<xs:pattern value="I|A|E"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TpPessoa">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1"/>
+			<xs:pattern value="F|J"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

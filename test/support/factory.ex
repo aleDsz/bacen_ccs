@@ -56,4 +56,43 @@ defmodule Bacen.CCS.Factory do
       movement_date: "2021-05-07"
     }
   end
+
+  def accs003_factory do
+    %Bacen.CCS.ACCS003{
+      daily_update_validation: build(:daily_update_validation)
+    }
+  end
+
+  def daily_update_validation_factory do
+    %Bacen.CCS.ACCS003.DailyUpdateValidation{
+      reference_date: "2021-05-07 05:04:00Z",
+      movement_date: "2021-05-07",
+      error_quantity: 0,
+      accepted_quantity: 1,
+      persons: build(:accs003_persons)
+    }
+  end
+
+  def accs003_persons_factory do
+    cnpj =
+      Brcpfcnpj.cnpj_generate()
+      |> String.slice(0..7)
+
+    %Bacen.CCS.ACCS003.DailyUpdateValidation.Persons{
+      cnpj: cnpj,
+      person: build_list(1, :accs003_person)
+    }
+  end
+
+  def accs003_person_factory do
+    %Bacen.CCS.ACCS003.DailyUpdateValidation.Persons.Person{
+      cpf_cnpj: Brcpfcnpj.cpf_generate(),
+      start_date: "2021-05-07",
+      operation_qualifier: "C",
+      end_date: nil,
+      type: "F",
+      operation_type: "I",
+      error: nil
+    }
+  end
 end
