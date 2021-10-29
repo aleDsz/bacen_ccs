@@ -7,6 +7,7 @@ defmodule Bacen.CCS.MixProject do
       version: "0.1.0",
       elixir: "~> 1.11",
       elixirc_paths: elixirc_paths(Mix.env()),
+      test_coverage: [tool: ExCoveralls],
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -28,7 +29,8 @@ defmodule Bacen.CCS.MixProject do
       {:telemetry, "~> 0.4", optional: true},
       {:brcpfcnpj, "~> 0.2"},
       {:ex_machina, "~> 2.7", only: :test, optional: true},
-      {:credo, "~> 1.5", only: [:dev, :test]}
+      {:credo, "~> 1.5", only: [:dev, :test]},
+      {:excoveralls, "~> 0.14", only: :test}
     ]
   end
 end
