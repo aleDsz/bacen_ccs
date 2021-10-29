@@ -145,4 +145,34 @@ defmodule Bacen.CCS.Factory do
       type: "F"
     }
   end
+
+  def message_factory do
+    %Bacen.CCS.Message{
+      message: build(:base_message)
+    }
+  end
+
+  def base_message_factory do
+    %Bacen.CCS.Message.BaseMessage{
+      header: build(:header),
+      body: build(:accs001)
+    }
+  end
+
+  def header_factory do
+    issuer_id =
+      Brcpfcnpj.cnpj_generate()
+      |> String.slice(0..7)
+
+    recipient_id =
+      Brcpfcnpj.cnpj_generate()
+      |> String.slice(0..7)
+
+    %Bacen.CCS.Message.BaseMessage.Header{
+      issuer_id: issuer_id,
+      recipient_id: recipient_id,
+      file_name: "ACCS001",
+      file_id: "000000000000"
+    }
+  end
 end
