@@ -95,4 +95,54 @@ defmodule Bacen.CCS.Factory do
       error: nil
     }
   end
+
+  def accs004_factory do
+    %Bacen.CCS.ACCS004{
+      registration_position: build(:registration_position)
+    }
+  end
+
+  def registration_position_factory do
+    %Bacen.CCS.ACCS004.RegistrationPosition{
+      conglomerate: build(:conglomerate),
+      persons: build(:accs004_persons),
+      movement_date: "2021-05-07"
+    }
+  end
+
+  def conglomerate_factory do
+    %Bacen.CCS.ACCS004.RegistrationPosition.Conglomerate{
+      participant: build_list(1, :participant)
+    }
+  end
+
+  def participant_factory do
+    cnpj =
+      Brcpfcnpj.cnpj_generate()
+      |> String.slice(0..7)
+
+    %Bacen.CCS.ACCS004.RegistrationPosition.Conglomerate.Participant{
+      cnpj: cnpj
+    }
+  end
+
+  def accs004_persons_factory do
+    cnpj =
+      Brcpfcnpj.cnpj_generate()
+      |> String.slice(0..7)
+
+    %Bacen.CCS.ACCS004.RegistrationPosition.Persons{
+      cnpj: cnpj,
+      person: build(:accs004_person)
+    }
+  end
+
+  def accs004_person_factory do
+    %Bacen.CCS.ACCS004.RegistrationPosition.Persons.Person{
+      cpf_cnpj: Brcpfcnpj.cpf_generate(),
+      start_date: "2021-05-07",
+      end_date: nil,
+      type: "F"
+    }
+  end
 end
