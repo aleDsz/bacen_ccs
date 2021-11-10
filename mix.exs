@@ -19,7 +19,7 @@ defmodule Bacen.CCS.MixProject do
 
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [:logger, :xmerl]
     ]
   end
 
