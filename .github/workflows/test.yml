@@ -1,0 +1,64 @@
+name: test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    env:
+      MIX_ENV: test
+
+    name: test
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        elixir: [1.11.4]
+        otp: [23.2.4]
+
+    steps:
+    - name: checkout repo
+      uses: actions/checkout@v2
+
+    - name: setup versions
+      uses: erlef/setup-elixir@v1
+      with:
+        elixir-version: ${{ matrix.elixir }}
+        otp-version: ${{ matrix.otp }}
+
+    - name: restore cache
+      uses: actions/cache@v2
+      id: mix-cache
+      with:
+        path: |
+          deps
+          _build
+          priv/plts
+        key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('mix.lock') }}
+
+    - name: install dependencies
+      if: steps.mix-cache.outputs.cache-hit != 'true'
+      run: |
+        mix deps.get
+        mix deps.compile
+
+    - name: check compilation
+      run: mix compile --warning-as-errors
+
+    - name: create plts
+      if: steps.mix-cache.outputs.cache-hit != 'true'
+      run: |
+        mkdir -p priv/plts
+        mix dialyzer --plt
+
+    - name: check format and analyze code
+      run: mix check
+
+    - name: tests & coverage
+      run: mix coveralls

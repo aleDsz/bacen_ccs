@@ -9,10 +9,17 @@ defmodule Bacen.CCS.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       test_coverage: [tool: ExCoveralls],
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      aliases: aliases(),
+      dialyzer: dialyzer()
     ]
   end
 
+  defp dialyzer do
+    [
+      plt_add_apps: [:ecto, :ex_machina, :timex]
+    ]
+  end
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
@@ -34,6 +41,20 @@ defmodule Bacen.CCS.MixProject do
       {:excoveralls, "~> 0.14", only: :test},
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
+    ]
+  end
+
+  defp aliases do
+    [
+      check: [
+        "format --check-formatted mix.exs \"lib/**/*.{ex,exs}\" \"test/**/*.{ex,exs}\" \"priv/**/*.{ex,exs}\"",
+        "deps.unlock --check-unused",
+        "credo",
+        "dialyzer"
+      ],
+      "format.all": [
+        "format mix.exs \"lib/**/*.{ex,exs}\" \"test/**/*.{ex,exs}\""
+      ]
     ]
   end
 end
