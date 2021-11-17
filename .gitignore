@@ -22,6 +22,8 @@ erl_crash.dump
 # Ignore package tarball (built via "mix hex.build").
 bacen_ccs-*.tar
 
-
 # Temporary files for e.g. tests
 /tmp
+
+# Ignore dialyzer PLTs
+/priv/plts/
