@@ -33,6 +33,17 @@ def deps do
 end
 ```
 
+Após isso, altere a função privada `application/0` para utilizar a biblioteca `xmerl` como aplicação extra:
+
+```elixir
+def application do
+  [
+    mod: {MyApp.Application, []},
+    extra_applications: [:logger, :runtime_tools, :xmerl]
+  ]
+end
+```
+
 ### Configuração
 
 Para acessar o ambiente de homologação, é necessária a configuração:
