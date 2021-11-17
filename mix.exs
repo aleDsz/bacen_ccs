@@ -31,7 +31,9 @@ defmodule Bacen.CCS.MixProject do
       {:brcpfcnpj, "~> 0.2"},
       {:ex_machina, "~> 2.7", only: :test, optional: true},
       {:credo, "~> 1.5", only: [:dev, :test]},
-      {:excoveralls, "~> 0.14", only: :test}
+      {:excoveralls, "~> 0.14", only: :test},
+      {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
     ]
   end
 end
