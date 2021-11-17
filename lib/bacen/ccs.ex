@@ -44,20 +44,6 @@ defmodule Bacen.CCS do
           | CCS0004
 
   @doc """
-  Checks if system is defined to use the staging server
-
-  ## Examples
-
-      iex> Bacen.CCS.test?()
-      false
-
-  """
-  @spec test?() :: boolean()
-  def test? do
-    Application.get_env(:bacen_ccs, :test_mode, false)
-  end
-
-  @doc """
   Gets the schema module from given name
 
   ## Examples
