@@ -54,7 +54,7 @@ defmodule Bacen.CCS.MixProject do
 
   defp deps do
     [
-      {:ecto, "~> 3.7.1", optional: true},
+      {:ecto, "~> 3.8.3", optional: true},
       {:telemetry, "~> 0.4", optional: true},
       {:timex, "~> 3.7", optional: true},
       {:brcpfcnpj, "~> 0.2"},
